@@ -76,3 +76,19 @@ int main(int argc, char const *argv[])
    SQLFreeHandle(SQL_HANDLE_DBC, hdbc);
    SQLFreeHandle(SQL_HANDLE_ENV, henv);
 }
+
+
+
+"CREATE TABLE inventory (id serial PRIMARY KEY, size integer NOT NULL, type char(15) NOT NULL, date_prod date);"
+
+"CREATE TABLE clients (id serial PRIMARY KEY, first_name char(20) NOT NULL, last_name char(20) NOT NULL);"
+
+"CREATE TABLE rents (id serial PRIMARY KEY, id_item integer references inventory(id), rent_start date NOT NULL, rent_end date, id_client integer references clients(id));"
+
+insert into clients(first_name,last_name) values ('Ivan', 'Ivanov');
+
+insert into inventory(size,type,date_prod) values (45, 'skis','2015-09-03');
+
+insert into rents(id_item,id_client,rent_start) values (1,1,'2019-10-11');
+
+select exists (select 1 from clients where last_name='Ivanov' and first_name='Ivano'); 
